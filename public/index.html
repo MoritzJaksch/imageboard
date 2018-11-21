@@ -2,9 +2,51 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+
+    <div id="main">
+        <div id = "input">
+            <input v-model = "form.title"placeholder = "title" type="text" name = "title">
+            <input v-model = "form.description"placeholder = "description" type="text" name = "description">
+            <input v-model = "form.username"placeholder = "username" type="text" name = "username">
+            <input type="file" accept = "image/*" @change = "handleFileChange">
+
+            <button @click = "uploadFile">upload</button>
+        </div>
+        <div class = "cards-container">
+            <div class = "image-cards" v-for = "image in imagesArr">
+                <img class = "images" :src="image.url">
+                <p class = "image-title">{{image.title}}</p>
+            </div>
+        </div>
+
+
+        <!-- <img :src="" alt=""> -->
+        <!-- <h3>{{header}}</h3>
+        <p>{{ 2 + 2 }}</p>
+        <p>for lunch we went to {{lunch}}</p>
+
+
+        <ul v-for = "item in pokemon">
+            <li>{{item}}</li>
+        </ul>
+
+        <p v-for = "animal in cuteAnimals">{{animal.name}}, {{animal.cuteScore}}</p>
+
+        <ul v-for = "pokemon in pokemonArray"><li>
+            {{pokemon}}
+        </li></ul>
+
+
+
+        <img :src="imgSrc">
+
+        <p v-if = "integer === 1">I am a special text you only see if integer is 1</p> -->
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>

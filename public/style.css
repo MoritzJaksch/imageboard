@@ -1,0 +1,51 @@
+* {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+        Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+}
+
+input {
+    border-bottom: 1px solid black;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    width: 120px;
+    margin-bottom: 20px;
+    background: none;
+    font-size: 13px;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.cards-container {
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.image-cards {
+    border-radius: 10px;
+    margin-left: 15px;
+    marign-right: 15px;
+    height: 240px;
+    width: 320px;
+    border: 1px solid black;
+}
+.images {
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 200px;
+    width: 300px;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+
+.image-title {
+    margin-left: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
