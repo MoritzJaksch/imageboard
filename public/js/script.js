@@ -53,8 +53,9 @@
                         comment: this.commentform.comment,
                         id: this.imageId
                     })
-                    .then(function(result) {
-                        console.log("THESE ARE COMMENT: ", result);
+                    .then(function(res) {
+                        self.comments.unshift(res.data.rows[0]);
+                        console.log("THESE ARE COMMENT: ", res.data.rows);
                     });
                 console.log("CHAT WORKING!!!!");
             }

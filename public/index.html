@@ -8,41 +8,50 @@
 
 
     <div id="main">
-        <form id = "input">
-            <input v-model = "form.title"placeholder = "title" type="text" name = "title">
-            <input v-model = "form.description"placeholder = "description" type="text" name = "description">
-            <input v-model = "form.username"placeholder = "username" type="text" name = "username">
-            <input type="file" accept = "image/*" @change = "handleFileChange">
+        <div class = "main-flex">
 
-            <button @click = "uploadFile">upload</button>
-        </form>
-        <div class = "cards-container">
-            <div class = "image-cards" v-for = "image in imagesArr" @click="toggleComponent">
-                <img class = "images" :src="image.url" :id = "image.id">
-                <p class = "image-title">{{image.title}}</p>
+            <div class = "head">
+
+                <form id = "input">
+                    <input v-model = "form.title"placeholder = "title" type="text" name = "title">
+                    <input v-model = "form.description"placeholder = "description" type="text" name = "description">
+                    <input v-model = "form.username"placeholder = "username" type="text" name = "username">
+                    <input type="file" accept = "image/*" @change = "handleFileChange">
+
+                    <button @click = "uploadFile">upload</button>
+                </form>
+            </div>
+            <div class = "cards-container">
+                <div class = "image-cards" v-for = "image in imagesArr" @click="toggleComponent">
+                    <img class = "images" :src="image.url" :id = "image.id">
+                </div>
             </div>
         </div>
+        <!-- <p class = "image-title">{{image.title}}</p> -->
 
         <some-component :image-id = "imageId" v-if = "imageId" @close-component = "closingComponent"></some-component>
 
     </div>
 
     <script id = "my-template" type = "text/x-template">
-        <div class = "image-modal" :image = "image" >
-            <div v-for = "image in image" >
+        <div class= "modal-container">
 
-                <img class="picture-modal" :src="image.url">
-            </div>
-            <h1 @click = "closeComponent" >X</h1>
-            <div>
-                <input v-model = "commentform.username" type="text" placeholder="username" name="username">
-                <input v-model = "commentform.comment" type="text" placeholder="comment" name="comment">
-                <button @click = "postComment">post</button>
-            </div>
-            <div class = "commentsection" v-if = "comments.length > 0" v-for = "comment in comments">
-                <div><p>{{comment.comment}}</p>
-                <p>{{comment.username}}</p></div>
-            </div>
+            <div class = "image-modal" :image = "image" >
+                <div v-for = "image in image" >
+
+                    <img class="picture-modal" :src="image.url">
+                </div>
+                <h1 @click = "closeComponent" >X</h1>
+                <div>
+                    <input v-model = "commentform.username" type="text" placeholder="username" name="username">
+                    <input v-model = "commentform.comment" type="text" placeholder="comment" name="comment">
+                    <button @click = "postComment">post</button>
+                </div>
+                <div class = "commentsection" v-if = "comments.length > 0" v-for = "comment in comments">
+                    <div><p>{{comment.comment}}</p>
+                        <p>{{comment.username}}</p></div>
+                    </div>
+                </div>
         </div>
         <!-- inputfield for comment section goes in here -->
     </script>
