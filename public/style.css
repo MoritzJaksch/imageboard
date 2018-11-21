@@ -4,6 +4,19 @@
     font-weight: 300;
 }
 
+.image-modal {
+    margin: 0, auto;
+    position: fixed;
+    height: 90%;
+    width: 90%;
+    background-color: rgba(51, 51, 51, 0.57);
+    top: 0;
+}
+
+.picture-modal {
+    width: 600px;
+}
+
 input {
     border-bottom: 1px solid black;
     border-right: 0px;

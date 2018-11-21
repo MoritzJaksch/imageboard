@@ -26,13 +26,16 @@ var uploader = multer({
         fileSize: 2097152
     }
 });
-app.use(
-    require("body-parser").urlencoded({
-        extended: false
-    })
-);
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
 
-const { getData, uploadData } = require("./db");
+const {
+    getData,
+    uploadData,
+    getPicture,
+    postingComment,
+    getComments
+} = require("./db");
 
 app.use(express.static("./public"));
 app.use(express.static("./uploads"));
@@ -62,6 +65,25 @@ app.get("/get-images", (req, res) => {
     getData().then(images => {
         res.json(images.rows);
     });
+});
+
+app.get("/get-modal", (req, res) => {
+    console.log("request: ", req.query);
+    Promise.all([getPicture(req.query.id), getComments(req.query.id)]).then(
+        picture => {
+            console.log("PICTURE + COMMENT: ", picture);
+            res.json(picture);
+        }
+    );
+});
+
+app.post("/comment", (req, res) => {
+    postingComment(req.body.id, req.body.comment, req.body.user).then(
+        comments => {
+            console.log("THESE ARE DB COMMENTS: ", comments);
+            res.json(comments);
+        }
+    );
 });
 
 app.listen(8080, () => ca.rainbow("Big Brother is listening"));
