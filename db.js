@@ -10,23 +10,47 @@ var db = spicedPg(
 );
 
 exports.getData = () => {
-    return db.query(`SELECT * FROM images ORDER BY created_at DESC`);
+    return db.query(`SELECT * FROM images ORDER BY created_at DESC LIMIT 10`);
+};
+exports.getMoreImages = lastId => {
+    return db
+        .query(
+            `SELECT *
+           FROM images
+        WHERE id < $1
+        ORDER BY created_at desc
+        LIMIT 9`,
+            [lastId]
+        )
+        .then(results => {
+            return results.rows;
+        });
 };
 
 exports.uploadData = (url, title, description, username) => {
     return db.query(
-        `INSERT INTO images (url, title, description, username) VALUES ($1, $2, $3, $4) RETURNING url, title`,
+        `INSERT INTO images (url, title, description, username) VALUES ($1, $2, $3, $4) RETURNING id, url, title`,
         [url || null, title || null, description || null, username || null]
     );
 };
 
 exports.getPicture = id => {
     return db.query(
-        `SELECT url, title, description FROM images WHERE id = $1`,
+        `SELECT *, (
+            SELECT id FROM images
+            WHERE id > $1
+            LIMIT 1
+        ) AS next_id, (
+            SELECT id FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 1
+        ) AS prev_id
+        FROM images
+        WHERE id = $1`,
         [id || null]
     );
 };
-
 exports.postingComment = (img_id, comment, username) => {
     return db.query(
         `INSERT INTO comments (img_id, comment, username) VALUES ($1, $2, $3) RETURNING *`,
