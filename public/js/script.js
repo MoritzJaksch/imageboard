@@ -10,7 +10,9 @@
                     username: "",
                     comment: ""
                 },
-                comments: []
+                comments: [],
+                nextId: "",
+                prevId: ""
             };
         },
         watch: {
@@ -49,6 +51,9 @@
 
                     self.image = res.data[0].rows;
                     self.comments = res.data[1].rows;
+                    self.nextId = self.image[0].prev_id;
+                    self.prevId = self.image[0].next_id;
+
                     console.log("IMAGE DESCRIPTION?!", self.image);
                 });
 
@@ -58,6 +63,7 @@
         methods: {
             prevPicture: function() {
                 var self = this;
+
                 axios
                     .get("/get-modal", {
                         params: {
@@ -69,10 +75,13 @@
 
                         self.image = res.data[0].rows;
                         self.comments = res.data[1].rows;
+                        self.nextId = self.image[0].prev_id;
+                        self.prevId = self.image[0].next_id;
                     });
             },
             nextPicture: function() {
                 var self = this;
+
                 axios
                     .get("/get-modal", {
                         params: {
@@ -84,6 +93,8 @@
 
                         self.image = res.data[0].rows;
                         self.comments = res.data[1].rows;
+                        self.nextId = self.image[0].prev_id;
+                        self.prevId = self.image[0].next_id;
                     });
             },
             closeComponent: function() {
@@ -109,12 +120,12 @@
         el: "#main",
         data: {
             name: "moe",
-            hovered: false,
-
+            hovered: "",
+            likes: 0,
             imagesArr: [],
             imagesId: [],
             morePics: true,
-
+            foodshow: "",
             imageId: location.hash.slice(1) || 0,
             // image: [],
             //should equal the id of the picture that was clicked on
@@ -130,9 +141,6 @@
         },
 
         mounted: function() {
-            setInterval(function() {
-                console.log("yay");
-            }, 3000);
             var self = this;
             window.addEventListener("hashchange", function() {
                 console.log("HASH HAS CHANGED!!!!!!!!", location.hash.slice(1));
@@ -167,6 +175,26 @@
             });
         },
         methods: {
+            like: function(e) {
+                for (var i = 0; i < this.imagesArr.length; i++) {
+                    if (this.imagesArr[i].id == e.target.id) {
+                        this.imagesArr[i].likes += 1;
+                    }
+                }
+                var self = this;
+                var lastId = this.imagesArr[this.imagesArr.length - 1];
+                console.log("whats this now?", lastId);
+                console.log("IS THIS NAN?", this.imagesArr);
+                var totalLikes = e.target.likes + 1;
+
+                e.target.innerText = totalLikes;
+
+                var id = e.target.id;
+                axios.post("/like", { id }).then(likes => {
+                    console.log("these are the likes: ", likes);
+                    console.log("i like it!", self.likes);
+                });
+            },
             getMoreImages: function() {
                 var self = this;
 

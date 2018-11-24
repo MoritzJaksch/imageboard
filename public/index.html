@@ -3,6 +3,7 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400" rel="stylesheet">
 </head>
 <body>
 
@@ -11,8 +12,8 @@
         <div class = "main-flex">
 
                 <div class = "head">
-                    <div @mouseover = "hovered = !hovered" class = heading>
-                        <h1 class="my-h1">this is a&nbsp;</h1><h1 class="my-h1-red"v-if = "hovered">(food)&nbsp;</h1><h1 class = "my-h1"> porn site.</h1>
+                    <div @mouseenter = "hovered = 'color:#ef8354;'" @mouseleave = "hovered = ''" class = heading>
+                        <h1 class="my-h1">this is a&nbsp;</h1><div :class = "foodshow" class = "food"><h1 class="my-h1-red" :style = "hovered">(food)&nbsp;</h1></div><h1 class = "my-h1"> porn site.</h1>
                     </div>
 
                     <form id = "input">
@@ -26,9 +27,11 @@
                     </form>
                 </div>
                 <div class = "cards-container">
-                    <div class = "image-cards" v-if = "imagesArr.length > 1"v-for = "image in imagesArr"  @click="toggleComponent">
+                    <div class = "image-cards" v-if = "imagesArr.length > 1"v-for = "image in imagesArr"  >
+                        <img class="like-hearts" @click="like"src="/assets/Screen Shot 2018-11-24 at 17.14.03.png" :id = "image.id" :likes = "image.likes">
+                        <p class = "like-amount" :id = "image.id" :likes = "image.likes" @click="like">{{image.likes}}</p>
                         <a :href="'#'+ image.id">
-                            <div class = "image-title" :id = "image.id">
+                            <div class = "image-title" :id = "image.id" @click="toggleComponent">
 
                                 <p class = "image-title-p">{{image.title}}</p>
 
@@ -69,9 +72,9 @@
                             <p class = "comment">{{comment.comment}}</p></div>
                         </div>
                     </div>
-                    <p @click = "nextPicture">NEXT</p>
-                    <p @click = "prevPicture">PREV</p>
                 </div>
+                <img v-if = "prevId"class = "prev" @click = "nextPicture" src="/assets/prev.png">
+                <img v-if = "nextId"class = "next" @click = "prevPicture" src="/assets/next.png">
         </div>
         <!-- inputfield for comment section goes in here -->
     </script>

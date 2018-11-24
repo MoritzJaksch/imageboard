@@ -7,6 +7,7 @@ CREATE TABLE images(
     username VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    likes INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -17,6 +18,7 @@ CREATE TABLE comments(
     comment VARCHAR(300) NOT NULL
 );
 
+--
 -- INSERT INTO images (url, username, title, description) VALUES (
 --     'https://s3.amazonaws.com/spicedling/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',
 --     'funkychicken',

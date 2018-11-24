@@ -9,18 +9,44 @@ body {
     /* background: rgb(65, 62, 64); */
 }
 .my-h1 {
+    font-family: "Comfortaa", cursive;
     font-size: 50px;
     /* margin-bottom: 100px; */
     color: #e4d7ea;
     display: inline-block;
 }
 .my-h1-red {
+    font-family: "Comfortaa", cursive;
     font-size: 60px;
     /* margin-bottom: 100px; */
-    color: #ef8354;
+    color: #32374b;
+
+    /* color: #ef8354; */
     display: inline-block;
 }
 
+.like-hearts {
+    position: absolute;
+    height: 30px !important;
+    width: 30px !important;
+    z-index: 10;
+    bottom: 4px;
+    left: 4px;
+}
+.like-amount {
+    position: absolute;
+    height: 30px !important;
+    width: 30px !important;
+    z-index: 10;
+    bottom: -2px;
+    left: 2%;
+    text-align: center;
+    margin: 0;
+    color: #e4d7ea;
+    font-weight: 900;
+    font-size: 14px;
+    font-family: "Comfortaa", cursive;
+}
 /* MODAL */
 
 .closing-component {
@@ -31,31 +57,50 @@ body {
 }
 
 .commentsection-container {
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.23);
     position: absolute;
-    right: 2%;
-    height: 60%;
+    right: 5%;
+    top: 21.7%;
+    height: auto;
+    max-height: 64%;
     width: 40%;
     overflow: scroll;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 .commentsection {
 }
 
 .commentsection div {
-    width: 100%;
-    background-color: rgb(255, 253, 214);
+    border-radius: 2px;
+    position: relative;
+    /* display: block; */
+    min-height: 50px;
+    height: auto;
+    width: 90%;
+    background-color: #e4d7ea;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-left: 5%;
 }
 
 .commentsection div p {
     color: black !important;
+    /* position: absolute; */
     margin-left: 20px;
+    /* margin-bottom: 10px; */
+    /* bottom: 0; */
+    offset: 1;
+    /* height: 23px; */
+    width: 96%;
+    padding: 3px;
 }
 .user {
     font-size: 13px;
     margin-top: 0.1vh;
 }
 .comment {
-    margin-bottom: 2vh;
+    /* margin-bottom: 2vh; */
 }
 .head {
     margin-top: 50px;
@@ -71,7 +116,7 @@ body {
 }
 .modal-container {
     top: 0;
-
+    z-index: 1000000;
     position: fixed;
     height: 100%;
     width: 100%;
@@ -90,15 +135,18 @@ body {
 }
 
 .picture-modal {
-    width: 48%;
-    margin-left: -48%;
-    margin-top: 2%;
+    max-width: 48%;
+    /* max-height: 90%; */
+    /* margin-left: -52%; */
+    margin-right: 45%;
+    margin-top: 5%;
     margin-bottom: 2%;
     /* margin-top: ; */
     /* align-self: flex-start; */
 }
 
 .main {
+    border-radius: 2px;
     text-align: center;
     background-color: white;
     border: 0px;
@@ -135,9 +183,12 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 9%;
 }
 
 .input-file + label {
+    border-radius: 2px;
+    cursor: pointer;
     position: relative;
     text-align: center;
     height: 30px;
@@ -162,6 +213,8 @@ form {
 }
 
 .upload-file {
+    border-radius: 2px;
+    cursor: pointer;
     border: 0;
     font-size: 13px;
     position: absolute;
@@ -195,12 +248,12 @@ form {
 
 .comment-container {
     position: absolute;
-    right: 2%;
+    right: 5%;
     height: 10%;
     width: 40%;
     overflow: scroll;
     top: 0;
-    margin-top: 2%;
+    margin-top: 5%;
 }
 .comment-user {
     width: 20%;
@@ -228,15 +281,43 @@ form {
 .image-desc-p {
     width: 48%;
     text-align: center;
-    margin-left: -48%;
+    /* margin-left: -52%; */
+    margin-right: 45%;
     margin-top: 0;
     margin-bottom: 2%;
     color: #e4d7ea;
     font-size: 24px;
 }
+.next {
+    position: absolute;
+    right: 1%;
+    height: 10%;
+}
+.prev {
+    position: absolute;
+    left: 1%;
+    height: 10%;
+}
 /*  MODAL END */
 
+.food {
+    overflow: hidden;
+    width: 0;
+    animation-name: expand;
+    animation-duration: 4s;
+    animation-delay: 2s;
+}
+
+@keyframes expand {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 191.7px;
+    }
+}
 .more-button {
+    cursor: pointer;
     border: 0;
     font-size: 13px;
     height: 40px;

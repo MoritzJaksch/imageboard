@@ -35,7 +35,8 @@ const {
     getPicture,
     postingComment,
     getComments,
-    getMoreImages
+    getMoreImages,
+    likePicture
 } = require("./db");
 
 app.use(express.static("./public"));
@@ -57,6 +58,15 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
             success: false
         });
     }
+});
+
+app.post("/like", (req, res) => {
+    console.log(req.body);
+    console.log("likes id: ", req.body.id);
+    likePicture(req.body.id).then(likes => {
+        console.log("these are the DB likes", likes.rows);
+        res.json(likes);
+    });
 });
 
 app.get("/get-images", (req, res) => {

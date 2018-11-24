@@ -29,8 +29,18 @@ exports.getMoreImages = lastId => {
 
 exports.uploadData = (url, title, description, username) => {
     return db.query(
-        `INSERT INTO images (url, title, description, username) VALUES ($1, $2, $3, $4) RETURNING id, url, title`,
+        `INSERT INTO images (url, title, description, username) VALUES ($1, $2, $3, $4) RETURNING id, url, title, likes`,
         [url || null, title || null, description || null, username || null]
+    );
+};
+
+exports.likePicture = id => {
+    return db.query(
+        `UPDATE images
+        SET likes = likes + 1
+        WHERE id = $1
+        RETURNING likes, id`,
+        [id]
     );
 };
 
