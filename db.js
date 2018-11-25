@@ -12,6 +12,13 @@ var db = spicedPg(
 exports.getData = () => {
     return db.query(`SELECT * FROM images ORDER BY created_at DESC LIMIT 10`);
 };
+
+exports.getDataByLikesDesc = () => {
+    return db.query(`SELECT * FROM images ORDER BY likes DESC`);
+};
+exports.getDataByLikesAsc = () => {
+    return db.query(`SELECT * FROM images ORDER BY likes ASC`);
+};
 exports.getMoreImages = lastId => {
     return db
         .query(
@@ -44,11 +51,33 @@ exports.likePicture = id => {
     );
 };
 
+exports.unLikePicture = id => {
+    return db.query(
+        `UPDATE images
+        SET likes = likes - 1
+        WHERE id = $1
+        RETURNING likes, id`,
+        [id]
+    );
+};
+
+exports.addHash = (img_id, hash) => {
+    return db.query(
+        `INSERT INTO hashes (img_id, hash) VALUES ($1, $2) RETURNING *`,
+        [img_id, hash]
+    );
+};
+
+exports.getHashes = img_id => {
+    return db.query(`SELECT * FROM hashes WHERE img_id = $1`, [img_id]);
+};
+
 exports.getPicture = id => {
     return db.query(
         `SELECT *, (
             SELECT id FROM images
             WHERE id > $1
+            ORDER BY id ASC
             LIMIT 1
         ) AS next_id, (
             SELECT id FROM images

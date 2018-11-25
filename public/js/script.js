@@ -11,8 +11,10 @@
                     comment: ""
                 },
                 comments: [],
+                hashes: [],
                 nextId: "",
-                prevId: ""
+                prevId: "",
+                hashClicked: false
             };
         },
         watch: {
@@ -47,13 +49,16 @@
                     }
                 })
                 .then(function(res) {
-                    console.log("RES DATA prev_id: ", res.data);
+                    console.log("RES DATA from get modal: ", res.data);
 
                     self.image = res.data[0].rows;
                     self.comments = res.data[1].rows;
+                    self.hashes = res.data[2].rows;
                     self.nextId = self.image[0].prev_id;
                     self.prevId = self.image[0].next_id;
-
+                    console.log("nextID: ", self.nextId);
+                    console.log("prevID: ", self.prevId);
+                    //
                     console.log("IMAGE DESCRIPTION?!", self.image);
                 });
 
@@ -61,6 +66,12 @@
             //in the end join query with comment data base to also get comments on the pictures.
         },
         methods: {
+            checkHashes: function(e) {
+                var self = this;
+                axios.get("/get-hashes", {
+                    params: { id: e.target.img_id }
+                });
+            },
             prevPicture: function() {
                 var self = this;
 
@@ -75,12 +86,17 @@
 
                         self.image = res.data[0].rows;
                         self.comments = res.data[1].rows;
+                        self.hashes = res.data[2].rows;
                         self.nextId = self.image[0].prev_id;
                         self.prevId = self.image[0].next_id;
+                        console.log("nextID: ", self.nextId);
+                        console.log("prevID: ", self.prevId);
                     });
             },
             nextPicture: function() {
                 var self = this;
+                // self.nextId = self.image[0].prev_id;
+                // self.prevId = self.image[0].next_id;
 
                 axios
                     .get("/get-modal", {
@@ -93,8 +109,11 @@
 
                         self.image = res.data[0].rows;
                         self.comments = res.data[1].rows;
+                        self.hashes = res.data[2].rows;
                         self.nextId = self.image[0].prev_id;
                         self.prevId = self.image[0].next_id;
+                        console.log("nextID: ", self.nextId);
+                        console.log("prevID: ", self.prevId);
                     });
             },
             closeComponent: function() {
@@ -136,7 +155,8 @@
                 title: "",
                 description: "",
                 username: "",
-                file: null
+                file: null,
+                hash: ""
             }
         },
 
@@ -175,25 +195,31 @@
             });
         },
         methods: {
+            unlike: function(e) {
+                for (var i = 0; i < this.imagesArr.length; i++) {
+                    if (this.imagesArr[i].id == e.target.id) {
+                        this.imagesArr[i].likes -= 1;
+                    }
+                }
+                var totalLikes = e.target.likes + 1;
+
+                e.target.innerText = totalLikes;
+
+                var id = e.target.id;
+                axios.post("/unlike", { id }).then(likes => {});
+            },
             like: function(e) {
                 for (var i = 0; i < this.imagesArr.length; i++) {
                     if (this.imagesArr[i].id == e.target.id) {
                         this.imagesArr[i].likes += 1;
                     }
                 }
-                var self = this;
-                var lastId = this.imagesArr[this.imagesArr.length - 1];
-                console.log("whats this now?", lastId);
-                console.log("IS THIS NAN?", this.imagesArr);
                 var totalLikes = e.target.likes + 1;
 
                 e.target.innerText = totalLikes;
 
                 var id = e.target.id;
-                axios.post("/like", { id }).then(likes => {
-                    console.log("these are the likes: ", likes);
-                    console.log("i like it!", self.likes);
-                });
+                axios.post("/like", { id }).then(likes => {});
             },
             getMoreImages: function() {
                 var self = this;
@@ -234,11 +260,22 @@
                 formData.append("title", this.form.title);
                 formData.append("description", this.form.description);
                 formData.append("username", this.form.username);
-
+                var hash = this.form.hash;
+                console.log("is this a string? ", hash);
+                console.log(typeof hash);
+                var hashArr = hash.split(",");
                 axios.post("/upload", formData).then(function(res) {
-                    console.log("FRONTEND res: ", res);
                     self.imagesArr.unshift(res.data.rows[0]);
-                    console.log("res: ", self.imagesArr);
+                    hashArr.forEach(function(hashInHashArr) {
+                        axios
+                            .post("/hash", {
+                                hashtag: hashInHashArr,
+                                imgId: res.data.rows[0].id
+                            })
+                            .then(hashRes => {
+                                console.log(hashRes);
+                            });
+                    });
                 });
             }
         }

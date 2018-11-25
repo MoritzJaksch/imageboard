@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS hashes;
 DROP TABLE IF EXISTS images;
 
 CREATE TABLE images(
@@ -18,6 +19,11 @@ CREATE TABLE comments(
     comment VARCHAR(300) NOT NULL
 );
 
+CREATE TABLE hashes(
+    id SERIAL PRIMARY KEY,
+    img_id INTEGER NOT NULL REFERENCES images(id),
+    hash VARCHAR(300)
+);
 --
 -- INSERT INTO images (url, username, title, description) VALUES (
 --     'https://s3.amazonaws.com/spicedling/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',

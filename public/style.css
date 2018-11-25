@@ -19,7 +19,7 @@ body {
     font-family: "Comfortaa", cursive;
     font-size: 60px;
     /* margin-bottom: 100px; */
-    color: #32374b;
+    /* color: #32374b; */
 
     /* color: #ef8354; */
     display: inline-block;
@@ -302,18 +302,22 @@ form {
 
 .food {
     overflow: hidden;
-    width: 0;
+    width: 191.7px;
+    color: #ef8354;
     animation-name: expand;
-    animation-duration: 4s;
-    animation-delay: 2s;
+    animation-duration: 6s;
 }
 
 @keyframes expand {
-    from {
+    0% {
+        color: #32374b;
         width: 0px;
     }
-    to {
-        width: 191.7px;
+    80% {
+        color: #32374b;
+    }
+    100% {
+        color: #ef8354;
     }
 }
 .more-button {

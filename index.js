@@ -36,7 +36,10 @@ const {
     postingComment,
     getComments,
     getMoreImages,
-    likePicture
+    likePicture,
+    unLikePicture,
+    addHash,
+    getHashes
 } = require("./db");
 
 app.use(express.static("./public"));
@@ -69,6 +72,15 @@ app.post("/like", (req, res) => {
     });
 });
 
+app.post("/unlike", (req, res) => {
+    console.log(req.body);
+    console.log("likes id: ", req.body.id);
+    unLikePicture(req.body.id).then(likes => {
+        console.log("these are the DB likes", likes.rows);
+        res.json(likes);
+    });
+});
+
 app.get("/get-images", (req, res) => {
     getData().then(images => {
         res.json(images.rows);
@@ -84,11 +96,14 @@ app.get("/get-more-images/:id/", (req, res) => {
 });
 
 app.get("/get-modal", (req, res) => {
-    Promise.all([getPicture(req.query.id), getComments(req.query.id)]).then(
-        picture => {
-            res.json(picture);
-        }
-    );
+    Promise.all([
+        getPicture(req.query.id),
+        getComments(req.query.id),
+        getHashes(req.query.id)
+    ]).then(picture => {
+        console.log("get modal results: ", picture.rows);
+        res.json(picture);
+    });
 });
 
 app.post("/comment", (req, res) => {
@@ -97,6 +112,18 @@ app.post("/comment", (req, res) => {
             res.json(comments);
         }
     );
+});
+
+app.post("/hash", (req, res) => {
+    addHash(req.body.imgId, req.body.hashtag).then(hashtag => {
+        res.json(hashtag);
+    });
+});
+
+app.get("/get-hashes", (req, res) => {
+    getHashes(req.query.id).then(hashes => {
+        res.json(hashes);
+    });
 });
 
 app.listen(8080, () => ca.rainbow("Big Brother is listening"));
