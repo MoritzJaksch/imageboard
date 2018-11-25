@@ -9,6 +9,7 @@
 
 
     <div id="main">
+        
         <div class = "main-flex">
 
                 <div class = "head">
@@ -58,15 +59,19 @@
             <div class = "image-modal" :image = "image" >
                 <div v-if = "!hashClicked" class = "modal-image-desc">
 
-                    <img @click = "checkHashes" class="picture-modal" v-for = "image in image" :src="image.url" :id = "image.description">
-                    <p class = "image-desc-p" v-for = "image in image">{{image.description}}</p>
-                    <p class = "image-hash-p" v-for = "hash in hashes" >{{hash.hash}}</p>
-                </div>
-                <div v-if = "hashClicked" class = "modal-image-desc">
-
                     <img class="picture-modal" v-for = "image in image" :src="image.url" :id = "image.description">
                     <p class = "image-desc-p" v-for = "image in image">{{image.description}}</p>
-                    <p class = "image-hash-p" v-for = "hash in hashes">{{hash.hash}}</p>
+                    <div class = "hash-container">
+
+                        <p @click = "checkHashes" class = "image-hash-p" v-for = "hash in hashes" :hash = "hash.hash">{{hash.hash}}</p>
+                    </div>
+                </div>
+                <h1 v-if = "hashClicked"class = "hash-header">other images marked with {{hashtag}}</h1>
+                <div v-if = "hashClicked" class = "modal-hashed-images">
+                    <div v-for = "image in hashedPics">
+
+                        <img @click = "nextPictureHash" :src="image.url" :id = "image.id">
+                    </div>
                 </div>
 
                 <img src = "/assets/noun_Close_1741505.png" class="closing-component" @click = "closeComponent" >

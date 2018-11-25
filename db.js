@@ -72,6 +72,10 @@ exports.getHashes = img_id => {
     return db.query(`SELECT * FROM hashes WHERE img_id = $1`, [img_id]);
 };
 
+exports.getHashesId = hash => {
+    return db.query(`SELECT img_id FROM hashes WHERE hash = $1`, [hash]);
+};
+
 exports.getPicture = id => {
     return db.query(
         `SELECT *, (

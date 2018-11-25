@@ -14,7 +14,9 @@
                 hashes: [],
                 nextId: "",
                 prevId: "",
-                hashClicked: false
+                hashClicked: false,
+                hashedPics: [],
+                hashtag: ""
             };
         },
         watch: {
@@ -67,10 +69,32 @@
         },
         methods: {
             checkHashes: function(e) {
+                this.hashtag = e.target.innerHTML;
+                this.hashClicked = true;
+                console.log("HASH ID: ", e.target.innerHTML);
                 var self = this;
-                axios.get("/get-hashes", {
-                    params: { id: e.target.img_id }
-                });
+                axios
+                    .get("/get-hashes", {
+                        params: { id: e.target.innerHTML }
+                    })
+                    .then(result => {
+                        result.data.forEach(function(id) {
+                            axios
+                                .get("/get-hashed-pictures", {
+                                    params: { id: id.img_id }
+                                })
+                                .then(function(res) {
+                                    self.hashedPics.push(res.data[0]);
+                                });
+                            console.log(id.img_id);
+                        });
+
+                        console.log("hashes checked", result);
+                        console.log(
+                            "THESE ARE THE NEW PICS: ",
+                            self.hashedPics
+                        );
+                    });
             },
             prevPicture: function() {
                 var self = this;
@@ -102,6 +126,31 @@
                     .get("/get-modal", {
                         params: {
                             id: self.image[0].next_id
+                        }
+                    })
+                    .then(function(res) {
+                        console.log("RES DATA prev_id: ", res.data);
+
+                        self.image = res.data[0].rows;
+                        self.comments = res.data[1].rows;
+                        self.hashes = res.data[2].rows;
+                        self.nextId = self.image[0].prev_id;
+                        self.prevId = self.image[0].next_id;
+                        console.log("nextID: ", self.nextId);
+                        console.log("prevID: ", self.prevId);
+                    });
+            },
+            nextPictureHash: function(e) {
+                this.hashClicked = false;
+
+                var self = this;
+                // self.nextId = self.image[0].prev_id;
+                // self.prevId = self.image[0].next_id;
+
+                axios
+                    .get("/get-modal", {
+                        params: {
+                            id: e.target.id
                         }
                     })
                     .then(function(res) {
@@ -267,9 +316,10 @@
                 axios.post("/upload", formData).then(function(res) {
                     self.imagesArr.unshift(res.data.rows[0]);
                     hashArr.forEach(function(hashInHashArr) {
+                        var hashWithoutSpace = hashInHashArr.replace(/\s+/, "");
                         axios
                             .post("/hash", {
-                                hashtag: hashInHashArr,
+                                hashtag: hashWithoutSpace,
                                 imgId: res.data.rows[0].id
                             })
                             .then(hashRes => {

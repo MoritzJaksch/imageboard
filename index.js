@@ -39,7 +39,8 @@ const {
     likePicture,
     unLikePicture,
     addHash,
-    getHashes
+    getHashes,
+    getHashesId
 } = require("./db");
 
 app.use(express.static("./public"));
@@ -121,8 +122,20 @@ app.post("/hash", (req, res) => {
 });
 
 app.get("/get-hashes", (req, res) => {
-    getHashes(req.query.id).then(hashes => {
-        res.json(hashes);
+    getHashesId(req.query.id).then(ids => {
+        console.log("THESE ARE THE HASH IDs", ids.rows);
+        res.json(ids.rows);
+        // for (var i = 0; i < ids.rows.length; i++) {
+        //     getPicture(ids.rows[i].img_id).then();
+        // }
+    });
+    // getPictures(req.query.id).then(hashes => {
+    //     res.json(hashes);
+    // });
+});
+app.get("/get-hashed-pictures", (req, res) => {
+    getPicture(req.query.id).then(picture => {
+        res.json(picture.rows);
     });
 });
 
