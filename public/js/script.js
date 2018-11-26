@@ -278,7 +278,7 @@
                 axios.get("/get-more-images/" + lastId).then(function(res) {
                     self.imagesArr.push.apply(self.imagesArr, res.data);
                     lastId = self.imagesArr[self.imagesArr.length - 1].id;
-                    if (lastId == 1) {
+                    if ((lastId = 1)) {
                         self.morePics = false;
                     }
                     for (var i = 0; i < res.data.length; i++) {
@@ -327,6 +327,7 @@
                             });
                     });
                 });
+                document.getElementById("input").reset();
             }
         }
     });

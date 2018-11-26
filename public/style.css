@@ -368,10 +368,11 @@ form {
 }
 .hash-container {
     background-color: rgba(255, 255, 255, 0.23);
-    border-radius: 3px; /* font-family: "Comfortaa", cursive; */
+    border-radius: 3px;
+    /* font-family: "Comfortaa", cursive; */
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: sp;
+    flex-flow: row wrap;
     width: 40%;
     height: 15%;
     right: 5%;
@@ -518,12 +519,17 @@ form {
     font-family: "Comfortaa", cursive;
     color: #e4d7ea;
     cursor: pointer;
+    margin-top: 2%;
+    margin-bottom: 0;
+    margin-right: 4%;
+    margin-left: 1%;
     height: 20%;
 }
 .image-hash-p:hover {
     color: #ef8354;
 }
 .image-title-p {
+    font-family: "Comfortaa", cursive;
     color: #e4d7ea;
     font-size: 24px;
 }
