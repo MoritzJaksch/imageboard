@@ -178,7 +178,8 @@
                         id: this.imageId
                     })
                     .then(function(res) {
-                        self.comments.unshift(res.data.rows[0]);
+                        self.comments.push(res.data.rows[0]);
+                        self.commentform = {};
                     });
             }
         }
@@ -323,11 +324,11 @@
                                 imgId: res.data.rows[0].id
                             })
                             .then(hashRes => {
+                                self.form = {};
                                 console.log(hashRes);
                             });
                     });
                 });
-                document.getElementById("input").reset();
             }
         }
     });

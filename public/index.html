@@ -9,7 +9,7 @@
 
 
     <div id="main">
-        
+
         <div class = "main-flex">
 
                 <div class = "head">
@@ -37,6 +37,7 @@
                             <div class = "image-title" :id = "image.id" @click="toggleComponent">
 
                                 <p class = "image-title-p">{{image.title}}</p>
+                                <p class = "image-username-p"></br>by {{image.username}}</p>
 
                             </div>
 
@@ -74,7 +75,7 @@
                     </div>
                 </div>
 
-                <img src = "/assets/noun_Close_1741505.png" class="closing-component" @click = "closeComponent" >
+                <img src = "/assets/close.png" class="closing-component" @click = "closeComponent" >
                 <div class = "comment-container">
                     <input class = "comment-user" v-model = "commentform.username" type="text" placeholder="username" name="username">
                     <input class = "comment-comment" v-model = "commentform.comment" type="text" placeholder="comment" name="comment">
