@@ -17,3 +17,40 @@ When you enter the page, the first thing you see is the title and the uploader i
 
 
 
+![header image](https://raw.github.com/moritzjaksch/imageboard/master/preview/preview1.gif) 
+
+
+
+#### <u>Imageboard</u>
+
+After scrolling down you will see the actual imageboard with all the previously uploaded pictures, their respective likes and a button to load more results. By clicking the heart symbol on the preview pictures, you can like your favourite pictures. The images are displayed in reverse chronological order.
+
+
+
+![header image](https://raw.github.com/moritzjaksch/imageboard/master/preview/preview2.png)
+
+
+
+#### <u>Image Modal</u>
+
+After clicking on any picture, a modal will pop up and you can see a bigger version of the picture, the  description and what other users said about the picture. You can also leave a comment if you like or get to the next or previous picture by clicking the arrow buttons on the sides. 
+
+
+
+![header image](https://raw.github.com/moritzjaksch/imageboard/master/preview/preview3.png)
+
+
+
+#### <u>Image Tags</u>
+
+By clicking on one of the descriptive tags below the comment section you can see all the other pictures with the same tags. This makes it easier to find images that are similiar to the one you are looking at. The preview of the current image will be replaced by a scrollable list of pictures that have been marked with the same tag. 
+
+
+
+![header image](https://raw.github.com/moritzjaksch/imageboard/master/preview/preview4.png)
+
+
+
+## Future Implementations
+
+My ideas for the future of this project are the possibility to add a recipe for the food shown in the picture and to implement a log in, so that not everybody can upload and delete pictures as they like but to build a community of people who are interested in cooking and food photography. 
